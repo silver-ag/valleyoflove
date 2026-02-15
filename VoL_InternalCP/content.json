@@ -1,0 +1,187 @@
+{
+    "Format": "2.8.0",
+    "Changes": [
+	{
+		"Action": "Load",
+		"Target": "Mods/{{ModId}}/objects",
+		"FromFile": "assets/objects.png"
+	},
+	{
+		"Action": "Load",
+		"Target": "Mods/{{ModId}}/icons",
+		"FromFile": "assets/icons.png"
+	},
+	{
+		"Action": "Load",
+		"Target": "Mods/{{ModId}}/crops",
+		"FromFile": "assets/crops.png"
+	},
+	{
+		"Action": "EditData",
+		"Target": "Data/Objects",
+		"Entries": {
+			"{{ModId}}_Joint": {
+				"Name": "Joint",
+				"DisplayName": "Joint",
+				"Description": ".",
+				"Type": "Crafting",
+				"Category": -8,
+				"Price": 150,
+				"Texture": "Mods/{{ModId}}/objects",
+				"SpriteIndex": 0,
+				"Edibility": 0,
+				"Buffs": [{
+                                                "Id": "Stoned",
+                                                "BuffId": "{{ModId}}_Stoned"
+                                         }]
+			},
+			"{{ModId}}_Acid": {
+				"Name": "Acid",
+				"DisplayName": "Acid",
+				"Description": ".",
+				"Type": "Crafting",
+				"Category": -8,
+				"Price": 350,
+				"Texture": "Mods/{{ModId}}/objects",
+				"SpriteIndex": 1,
+				"Edibility": 0,
+				"Buffs": [{
+					"Id": "Tripping",
+					"BuffId": "{{ModId}}_Tripping",
+					"Duration": 425 // about eight in game hours
+                }]
+			},
+			"{{ModId}}_Ecstacy": {
+				"Name": "Ecstacy",
+				"DisplayName": "Ecstacy",
+				"Description": ".",
+				"Type": "Crafting",
+				"Category": -8,
+				"Price": 150,
+				"Texture": "Mods/{{ModId}}/objects",
+				"SpriteIndex": 2,
+				"Edibility": 0,
+				"Buffs": [{
+					"Id": "Rolling",
+					"BuffId": "{{ModId}}_Rolling"
+				}]
+			},
+			"{{ModId}}_Mushroom": {
+				"Name": "Magic Mushroom",
+				"DisplayName": "Magic Mushroom",
+				"Description": ".",
+				"Type": "Forage",
+				"Category": -81,
+				"Price": 150,
+				"Texture": "Mods/{{ModId}}/objects",
+				"SpriteIndex": 3,
+				"Edibility": 0,
+				"Buffs": [{
+					"Id": "Tripping",
+					"BuffId": "{{ModId}}_Tripping"
+				}],
+				"ContextTags": ["forage_item", "season_fall", "season_spring"]
+			},
+			"{{ModId}}_CannabisSeeds": { // TODO: add to items in travelling shop
+				"Name": "Cannabis Seeds",
+				"DisplayName": "Cannabis Seeds",
+				"Description": ".",
+				"Type": "Seeds",
+				"Category": -74,
+				"Price": 50,
+				"Texture": "Mods/{{ModId}}/objects",
+				"SpriteIndex": 4
+			},
+			"{{ModId}}_Cannabis": {
+				"Name": "Cannabis",
+				"DisplayName": "Cannabis",
+				"Description": ".",
+				"Type": "Basic",
+				"Category": -80,
+				"Price": 150,
+				"Texture": "Mods/{{ModId}}/objects",
+				"SpriteIndex": 5,
+				"ContextTags": ["color_green"]
+			}
+		}
+	},
+	{
+		"Action": "EditData",
+		"Target": "Data/Crops",
+		"Entries": {
+			"{{ModId}}_CannabisSeeds": {
+				"Seasons": [ "Summer" ],
+				"DaysInPhase": [1, 2, 4, 3],
+				"HarvestItemId": "{{ModId}}_Cannabis",
+				"ExtraHarvestChance": 0.4,
+				"Texture": "Mods/{{ModId}}/crops",
+				"SpriteIndex": 0
+			}
+		}
+	},
+	{
+		"Action": "EditData",
+		"Target": "Data/Shops",
+		"TargetField": [ "Traveler", "Items" ],
+		"Entries": {
+			"{{ModId}}_CannabisSeeds": {
+				"Id": "{{ModId}}_CannabisSeeds",
+				"ItemId": "{{ModId}}_CannabisSeeds",
+				"Price": 100,
+				"AvailableStock": 5
+			}
+        },
+		"When": {
+			"Random: true, false, false, false, false": true
+		}
+	},
+	{
+		"Action": "EditData",
+		"Target": "Data/CraftingRecipes",
+		"Entries": {
+			"Roll A Joint": "{{ModId}}_Cannabis 2 172 1//{{ModId}}_Joint/false/default/Roll A Joint"
+		}
+	},
+	{
+		"Action": "EditData",
+		"Target": "Data/Buffs",
+		"Entries": {
+			"{{ModId}}_Stoned": {
+				"DisplayName": "Stoned",
+				"Duration": 120000, // two minutes, or about an three hours game time
+				"IconTexture": "Mods/{{ModId}}/icons",
+				"IconSpriteIndex": 0,
+				"Effects": {
+					"LuckLevel": 1,
+					"Immunity": 3,
+					"ForagingLevel": 1,
+					"Speed": -3
+				}
+			},
+			"{{ModId}}_Tripping": {
+				"DisplayName": "Tripping",
+				"Duration": 120000, // default for mushrooms, can be overridden for acid
+				"IconTexture": "Mods/{{ModId}}/icons",
+				"IconSpriteIndex": 1,
+				"Effects": {
+					"LuckLevel": 3,
+					"ForagingLevel": 1,
+					"Speed": -1
+				}
+			},
+			"{{ModId}}_Rolling": {
+				"DisplayName": "Rolling",
+				"Duration": 120000,
+				"IconTexture": "Mods/{{ModId}}/icons",
+				"IconSpriteIndex": 2,
+				"Effects": {
+					"LuckLevel": 2,
+					"Attack": -100,
+					"Speed": 1,
+					"MaxStamina": 30
+				}
+			}
+		}
+	},
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "Name": "Valley of Love ContentPack [INTERNAL]",
+    "Author": "silverfish",
+    "Version": "1.0.0",
+    "Description": "contains the stuff that was simpler to implement as a ContentPack. will not work properly on its own.",
+    "UniqueID": "silverfish.VoLInternal",
+    "UpdateKeys": [],
+    "ContentPackFor": {
+        "UniqueID": "Pathoschild.ContentPatcher"
+    }
+}
