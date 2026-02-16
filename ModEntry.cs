@@ -27,7 +27,6 @@ namespace VoL {
 		Microsoft.Xna.Framework.Color[] screen_buffer = new Microsoft.Xna.Framework.Color[1];
 		Microsoft.Xna.Framework.Color[] fractal_buffer = new Microsoft.Xna.Framework.Color[1];
 		Random rand = new Random();
-		RenderTarget2D new_shirt_texture;
 	
 		public static ModEntry instance;
 
@@ -94,73 +93,15 @@ namespace VoL {
                 	editor.Data["Woods"].Forage.Add(mushroom_foragedata_fall);
             	});
 			} else if (e.NameWithoutLocale.IsEquivalentTo("Data/Shirts")) {
-				e.Edit(asset => {
-					var editor = asset.AsDictionary<string, StardewValley.GameData.Shirts.ShirtData>();
-					this.new_shirt_texture = new RenderTarget2D(Game1.game1.GraphicsDevice, 256, ((editor.Data.Keys.Count/16)+1)*32);
-					Game1.game1.GraphicsDevice.SetRenderTarget(this.new_shirt_texture);
-					Game1.game1.GraphicsDevice.Clear(Color.Transparent);
-					using (var fileStream = File.Create("/tmp/testblankshirts.png")) {
-					    this.new_shirt_texture.SaveAsPng(fileStream, this.new_shirt_texture.Width, this.new_shirt_texture.Height);
-					}
-					Texture2D tie_dye_pattern = this.Helper.ModContent.Load<Texture2D>("assets/tiedye.png");
-					int n = 0;
-					string[] keys_copy = new string[editor.Data.Keys.Count];
-					editor.Data.Keys.CopyTo(keys_copy, 0);
-					foreach (string shirt_name in keys_copy) {
-						StardewValley.GameData.Shirts.ShirtData new_shirt = new StardewValley.GameData.Shirts.ShirtData();
-						new_shirt.Name = $"Tie-Dyed {editor.Data[shirt_name].Name}";
-						new_shirt.DisplayName = $"Tie-Dyed {editor.Data[shirt_name].DisplayName}";
-						new_shirt.Description = editor.Data[shirt_name].Description;
-						new_shirt.Price = editor.Data[shirt_name].Price;
-						new_shirt.Texture = $"Mods/{this.ModManifest.UniqueID}/tiedyedshirts";
-						new_shirt.SpriteIndex = n;
-						new_shirt.DefaultColor = editor.Data[shirt_name].DefaultColor;
-						new_shirt.CanBeDyed = editor.Data[shirt_name].CanBeDyed;
-						new_shirt.IsPrismatic = editor.Data[shirt_name].IsPrismatic;
-						new_shirt.HasSleeves = editor.Data[shirt_name].HasSleeves;
-						new_shirt.CanChooseDuringCharacterCustomization = false;
-						new_shirt.CustomFields = editor.Data[shirt_name].CustomFields;
-						editor.Data[$"{this.ModManifest.UniqueID}_TieDyed_{shirt_name}"] = new_shirt;
-						// generate images here
-						Texture2D old_shirt_texture_sheet = this.Helper.GameContent.Load<Texture2D>(editor.Data[shirt_name].Texture??"Characters/Farmer/shirts");
-						int old_shirt_index = editor.Data[shirt_name].SpriteIndex;
-						SpriteBatch sb = new SpriteBatch(Game1.game1.GraphicsDevice);
-						sb.Begin();
-						sb.Draw(old_shirt_texture_sheet, ShirtTextureBounds(n,false), ShirtTextureBounds(old_shirt_index,false), Color.White);
-						sb.Draw(old_shirt_texture_sheet, ShirtTextureBounds(n,true), ShirtTextureBounds(old_shirt_index,true), Color.White);
-						sb.End();
-						BlendState bs = new BlendState();
-						bs.ColorSourceBlend = Blend.DestinationAlpha;
-						bs.AlphaSourceBlend = Blend.Zero;
-						bs.ColorDestinationBlend = Blend.InverseSourceAlpha;
-						bs.AlphaDestinationBlend = Blend.One;
-						sb.Begin(blendState : bs);
-						sb.Draw(tie_dye_pattern, ShirtTextureBounds(n,false), ShirtTextureBounds(0,false), Color.White);
-						sb.Draw(tie_dye_pattern, ShirtTextureBounds(n,true), ShirtTextureBounds(0,false), Color.White);
-						sb.End();
-						n += 1;
-					}
-					using (var fileStream = File.Create("/tmp/testshirts.png")) {
-					    this.new_shirt_texture.SaveAsPng(fileStream, this.new_shirt_texture.Width, this.new_shirt_texture.Height);
-					}
-					this.Helper.GameContent.InvalidateCache($"Mods/{this.ModManifest.UniqueID}/tiedyedshirts");
-				}, AssetEditPriority.Late); // shirts added by mods that take effect after this one will not be tie-dyable
+				e.Edit(TieDying.EditShirts, AssetEditPriority.Late);
 			} else if (e.NameWithoutLocale.IsEquivalentTo($"Mods/{this.ModManifest.UniqueID}/tiedyedshirts")) {
-				e.LoadFrom(() => {
-					if (this.new_shirt_texture == null) {
-						this.Helper.GameContent.InvalidateCache("Data/Shirts");
-					}
-					return this.new_shirt_texture;
-				}, AssetLoadPriority.Medium);
+				e.LoadFrom(TieDying.LoadShirts, AssetLoadPriority.Medium);
+			} else if (e.NameWithoutLocale.IsEquivalentTo("Data/Pants")) {
+				e.Edit(TieDying.EditPants, AssetEditPriority.Late);
+			} else if (e.NameWithoutLocale.IsEquivalentTo($"Mods/{this.ModManifest.UniqueID}/tiedyedpants")) {
+				e.LoadFrom(TieDying.LoadPants, AssetLoadPriority.Medium);
 			}
     	}
-
-		private Rectangle ShirtTextureBounds(int index, bool dyemask) {
-			return new Rectangle((index%16)*8 + (dyemask?128:0),
-								 (index/16)*32, // integer division always rounds down
-								 8,
-								 32);
-		}
 
 		private void OnDayStarted(object? sender, DayStartedEventArgs e) {
 			// we only actually need to do these things at the start of the first day each session, but there doesn't seem to be an event for that
@@ -170,8 +111,6 @@ namespace VoL {
 			var reflected_eatanimationevent = this.Helper.Reflection.GetField<NetEvent1Field<StardewValley.Object, NetRef<StardewValley.Object>>>(Game1.player, "eatAnimationEvent").GetValue();
 			// invoked after performEatAnimation, allowing it to cancel the previous animation and substitute its own
 			reflected_eatanimationevent.onEvent += maybePerformSmokeAnimation;
-
-			Game1.player.addItemToInventory(new StardewValley.Objects.Clothing($"{this.ModManifest.UniqueID}_TieDyed_1133"));
 		}
 
 		private bool currently_tripping = false;
@@ -204,6 +143,11 @@ namespace VoL {
 					} catch (System.Reflection.TargetInvocationException) {
 						this.Monitor.Log("frame size mismatch due to window resizing, will update next frame", LogLevel.Debug);
 					}
+				}
+			}
+			if (Game1.player.buffs.IsApplied($"silverfish.VoLInternal_Stoned")) {
+				if (this.rand.Next(0,500) == 0) {
+					Game1.player.doEmote(32);
 				}
 			}
 		}
@@ -336,7 +280,7 @@ namespace VoL {
 		private double Lerp(double A, double B, double amount) {
 			return A + (B - A) * amount;
 		}
-		private void Log(string s) {
+		public void Log(string s) {
 			this.Monitor.Log(s, LogLevel.Debug);
 		}
 	}

@@ -1,0 +1,24 @@
+{
+	"Changes": [
+		{
+                	"Action": "Load",
+	                "Target": "Mods/{{ModId}}/objects",
+        	        "FromFile": "assets/objects.png"
+	        },
+        	{
+                	"Action": "Load",
+                	"Target": "Mods/{{ModId}}/icons",
+                	"FromFile": "assets/icons.png"
+        	},
+        	{
+                	"Action": "Load",
+                	"Target": "Mods/{{ModId}}/crops",
+                	"FromFile": "assets/crops.png"
+	        },
+        	{
+                	"Action": "Load",
+                	"Target": "Mods/{{ModId}}/bigcraftables",
+                	"FromFile": "assets/bigcraftables.png"
+	        },
+	]
+}

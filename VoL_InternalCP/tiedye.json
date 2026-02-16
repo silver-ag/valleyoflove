@@ -1,0 +1,110 @@
+{
+	"Changes": [
+		{
+			"Action": "EditData",
+			"Target": "Data/BigCraftables",
+			"Entries": {
+				"{{ModId}}_DyeTub": {
+					"Name": "Dye Tub",
+					"DisplayName": "Dye Tub",
+					"Description": ".",
+					"Fragility": 2,
+					"Texture": "Mods/{{ModId}}/bigcraftables",
+					"SpriteIndex": 0,
+					"ContextTags": ["placeable"]
+				},
+				"{{ModId}}_BleachTub": {
+					"Name": "Bleach Tub",
+					"DisplayName": "Bleach Tub",
+					"Description": ".",
+					"Fragility": 2,
+					"Texture": "Mods/{{ModId}}/bigcraftables",
+					"SpriteIndex": 1,
+					"ContextTags": ["placeable"]
+				}
+			}
+		},
+		{
+			"Action": "EditData",
+			"Target": "Data/Machines",
+			"Entries": {
+				"(BC){{ModId}}_DyeTub": {
+					"OutputRules": [
+						{
+							"Id": "Default",
+							"Triggers": [
+								{
+									"Id": "clothes",
+									"Trigger": "ItemPlacedInMachine",
+									"Condition": "ITEM_TYPE Input (S) (P), !ITEM_ID_PREFIX Input silverfish.VoL_TieDyed_"
+								}
+							],
+							"OutputItem": [
+								{
+									"Id": "Default",
+									"ItemId": "selph.ExtraMachineConfig.Holder",
+									"OutputMethod": null,
+									"CopyColor": true,
+									"CustomData": {
+										"selph.ExtraMachineConfig.ExtraOutputIds": "ActualDyeTubOutput"
+									}
+								}
+							],
+							"MinutesUntilReady": 10,
+						}
+					],
+					"WobbleWhileWorking": true,
+				},
+				"(BC){{ModId}}_BleachTub": {
+					"OutputRules": [
+						{
+							"Id": "Default",
+							"Triggers": [
+								{
+									"Id": "clothes",
+									"Trigger": "ItemPlacedInMachine",
+									"Condition": "ITEM_ID_PREFIX Input silverfish.VoL_TieDyed_",
+								}
+							],
+							"OutputItem": [
+								{
+									"Id": "Default",
+									"ItemId": "selph.ExtraMachineConfig.Holder",
+									"OutputMethod": null,
+									"ObjectColor": "White",
+									"CustomData": {
+										"selph.ExtraMachineConfig.ExtraOutputIds": "ActualBleachTubOutput"
+									}
+								}
+							],
+							"MinutesUntilReady": 10,
+						}
+					],
+					"WobbleWhileWorking": true,
+				}
+			}
+		},
+		{
+			"Action": "EditData",
+			"Target": "selph.ExtraMachineConfig/ExtraOutputs",
+			"Entries": {
+				"ActualDyeTubOutput": {
+					"Id": "ActualDyeTubOutput",
+					"OutputMethod": "VoL.TieDying, ValleyofLove: DyeTubGetOutput",
+					"CopyColor": true,
+				}
+			}
+		},
+		{
+			"Action": "EditData",
+			"Target": "selph.ExtraMachineConfig/ExtraOutputs",
+			"Entries": {
+				"ActualBleachTubOutput": {
+					"Id": "ActualBleachTubOutput",
+					"OutputMethod": "VoL.TieDying, ValleyofLove: BleachTubGetOutput",
+					"ObjectColor": "White",
+				}
+			}
+		}
+	]
+}

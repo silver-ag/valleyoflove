@@ -9,17 +9,14 @@ new events:
 - protest outside joja mart
 - add reactions to putting drugs in the potluck
 
-new crafting:
-- tie dying
-
 new items:
 - john lennon glasses
 
-ensure compatibility with aedethorn free love, birdb hippie desert trader and jazzmink hippie trader home
+ensure compatibility (and maybe interaction) with aedethorn free love and/or polyamory, birdb hippie desert trader and jazzmink hippie trailer home
 
 new characters:
 - a mother who does a lot of drugs and magic and her (young) daughter
 - a shy and easily frightened autistic guy
-- a guy who does a lot of arts and crafts
+- a guy who does a lot of arts and crafts and music
 - an anthropomorphic animal of some kind
 - an enigmatic friend who sometimes comes to stay while travelling around 

@@ -4,7 +4,12 @@
     "Version": "1.0.0",
     "Description": "speaks for itself really",
     "UniqueID": "silverfish.VoL",
-    "EntryDll": "Hippies.dll",
+    "EntryDll": "ValleyofLove.dll",
     "MinimumApiVersion": "4.0.0",
-    "UpdateKeys": []
+    "UpdateKeys": [],
+    "Dependencies": [
+        {
+            "UniqueId": "selph.ExtraMachineConfig",
+        }
+    ]
 }

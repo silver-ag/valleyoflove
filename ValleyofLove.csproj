@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ContentPacks Include="VoL_internalCP" Version="1.0.0" />
+    <ContentPacks Include="VoL_InternalCP" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
