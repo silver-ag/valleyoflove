@@ -1,0 +1,42 @@
+{
+	"Changes": [
+		{
+			"Action": "Load",
+			"Target": "Characters/{{ModId}}_Michael",
+			"FromFile": "assets/michael.png"
+		},
+		{
+			"Action": "Load",
+			"Target": "Portraits/{{ModId}}_Michael",
+			"FromFile": "assets/michael_portrait.png"
+		},
+		{
+			"Action": "EditData",
+			"Target": "Data/Characters",
+			"Entries": {
+				"{{ModId}}_Michael": {
+					"DisplayName": "Michael",
+					"BirthSeason": "Summer", // TODO
+					"BirthDay": 7,		 //
+					"HomeRegion": "Town",
+					"Gender": "Male",
+					"Age": "Adult",
+					"Manner": "Neutral",
+					"SocialAnxiety": "Shy",
+					"Optimism": "Positive",
+					"CanBeRomanced": false,
+					"Home": [
+						{
+							"Id": "Default",
+							"Location": "BusStop",
+							"Tile": {
+								"X": 4,
+								"Y": 5
+							}
+						}
+					]
+				}
+			}
+		},
+	]
+}

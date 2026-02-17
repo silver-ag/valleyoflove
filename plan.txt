@@ -1,6 +1,8 @@
 
 a group of hippies come to town
 
+they live at the southeast of cindersap forest, setting up camp by the edge of the waterfall. this means they have fairly easy access to the secret woods for foraging, and when the trash bear shows up they'll make friends with him based on a shared interest in environmentalism
+
 new social stuff:
 - people's reactions
 - some quests
@@ -16,7 +18,9 @@ ensure compatibility (and maybe interaction) with aedethorn free love and/or pol
 
 new characters:
 - a mother who does a lot of drugs and magic and her (young) daughter
-- a shy and easily frightened autistic guy
+- a shy and easily frightened autistic guy - michael
 - a guy who does a lot of arts and crafts and music
-- an anthropomorphic animal of some kind
+- once the trash bear shows up, he becomes part of the community
 - an enigmatic friend who sometimes comes to stay while travelling around 
+
+- go through and add support for translation with {{i18n:}}

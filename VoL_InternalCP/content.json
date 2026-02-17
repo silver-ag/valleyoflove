@@ -12,6 +12,10 @@
 		{
 			"Action": "Include",
 			"FromFile": "spritesheets.json"
+		},
+		{
+			"Action": "Include",
+			"FromFile": "characters/michael.json"
 		}
 	]
 }
